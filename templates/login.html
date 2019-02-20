@@ -78,6 +78,7 @@
   <header class="masthead">
     <div class="container">
       <div class="intro-text">
+
           {% with messages = get_flashed_messages() %}
           {% if messages %}
             <ul class=flashes>
@@ -87,6 +88,8 @@
             </ul>
           {% endif %}
         {% endwith %}
+
+
         <form action="{{ '/auth' }}" method="POST" class="text">
           UserName: <input type="text" name="uname" placeholder="enter the username here...." required/><br><br>
           Password: <input type="password" name="pass" placeholder="enter the password here..." required/><br><br>

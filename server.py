@@ -1,9 +1,7 @@
-
 from flask import Flask, render_template, request,url_for,redirect,session,flash
 from flaskext.mysql import MySQL
 from werkzeug import secure_filename
 import os
-
 
 app = Flask(__name__)
 mysql = MySQL()
@@ -11,7 +9,7 @@ mysql.init_app(app)
 
 app.secret_key = 'any random string'
 app.config["MYSQL_DATABASE_USER"] = "root"
-app.config["MYSQL_DATABASE_PASSWORD"] = "password"
+app.config["MYSQL_DATABASE_PASSWORD"] = "mysql"
 app.config["MYSQL_DATABASE_DB"] = "project"
 
 
@@ -27,23 +25,25 @@ def sign_up():
 def link():
    return render_template('link.html')
 
-@app.route('/logout')
-def logout():
-   session.pop('username',None)
-   return redirect(url_for('login'))
 
 @app.route('/login')
 def login():
    return render_template('login.html')
    
+
 @app.route('/upload')
 def upload_file():
    return render_template('home.html')
 
+@app.route('/logout')
+def logout():
+   session.pop('username',None)
+   return redirect(url_for('login'))
 
 @app.route('/mainpage')
 def mainpage():
    return render_template('mainpage.html')
+
 
 @app.route('/auth',methods = ['POST', 'GET'])
 def authenticate():
@@ -73,8 +73,6 @@ def authenticate():
       mysql.get_db().commit()
       cursor.close()
       conn.close()
-	
-
 
 @app.route('/session')
 def ses():
@@ -140,3 +138,6 @@ def summery():
 
 if __name__ == '__main__':
    app.run(debug = True)
+      f.save(secure_filename(f.filename))
+      return 'file uploaded successfully'
+		
