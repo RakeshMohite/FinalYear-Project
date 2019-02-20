@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request,url_for,redirect,session,flash
 from flaskext.mysql import MySQL
 from werkzeug import secure_filename
-
+import os
 
 app = Flask(__name__)
 mysql = MySQL()
@@ -13,7 +13,6 @@ app.config["MYSQL_DATABASE_PASSWORD"] = "mysql"
 app.config["MYSQL_DATABASE_DB"] = "project"
 
 
-
 @app.route('/')
 def home_page():
 	return render_template('index.html')
@@ -22,10 +21,20 @@ def home_page():
 def sign_up():
    return render_template('signup.html')
 
+@app.route('/link')
+def link():
+   return render_template('link.html')
+
+
 @app.route('/login')
 def login():
    return render_template('login.html')
    
+
+@app.route('/upload')
+def upload_file():
+   return render_template('home.html')
+
 @app.route('/logout')
 def logout():
    session.pop('username',None)
@@ -36,10 +45,6 @@ def mainpage():
    return render_template('mainpage.html')
 
 
-@app.route('/upload')
-def upload_file():
-   return render_template('home.html')
-	
 @app.route('/auth',methods = ['POST', 'GET'])
 def authenticate():
    if request.method == 'POST':
@@ -68,9 +73,7 @@ def authenticate():
       mysql.get_db().commit()
       cursor.close()
       conn.close()
-      
-      
-      
+
 @app.route('/session')
 def ses():
    if 'username' in session:
@@ -112,12 +115,29 @@ def signupdb():
    else:
       return 'error'
 
+
 @app.route('/uploader', methods = ['GET', 'POST'])
 def upload():
    if request.method == 'POST':
       f = request.files['file']
+      info = os.stat(f.filename)
+      print info
+      if(info.st_size < 1048576 ): 
+         f.save(os.path.join("SampleInputFiles/",f.filename))
+         flash('File uploaded sucessfully...')
+         return render_template('summery.html')
+      elif(info.st_size > 1048576 ):
+         flash('File is to large..! Please login to proceed...')
+         return render_template('login.html')	
+
+@app.route('/summery')
+def summery():
+   return render_template('summery.html')
+
+
+
+if __name__ == '__main__':
+   app.run(debug = True)
       f.save(secure_filename(f.filename))
       return 'file uploaded successfully'
 		
-if __name__ == '__main__':
-   app.run(debug = True)

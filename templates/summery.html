@@ -2,20 +2,37 @@
 <html lang="en">
 
 <style>
-.text{
 
-  color: black;
-  font-size:12pt;
-  border-color: black;
-  border-width:100p
+.form{
+
+  color: white;
+  font-size: 10pt;
+  background-color: transparent;
+  padding-left: 1%;
 }
-.btn{
-  padding-left:1%;
+.link{
+  color:white;
+  font: bold;
+  background-color: transparent;
+  font-size: 15pt;
+}
+.form1
+{
+    background-color: gray;
+    border-style: dashed;
+    border-color:yellow;
+    background-color: transparent;
+}
+.pad{
+
+    padding-top:11%;
+    padding-bottom:6%;
+
 }
 
 </style>
-<head>
 
+<head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
@@ -65,10 +82,7 @@
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#contact">Reach Us</a>
           </li>
-          <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="{{url_for('login')}}">Login</a>
-              <a class="nav-link js-scroll-trigger" href="{{url_for('sign_up')}}">Sign In</a>
-            </li>
+          
         </ul>
       </div>
     </div>
@@ -76,38 +90,27 @@
 
   <!-- Header -->
   <header class="masthead">
-    <div class="container">
-      <div class="intro-text">
-
-          {% with messages = get_flashed_messages() %}
-          {% if messages %}
-            <ul class=flashes>
-            {% for message in messages %}
-              {{ message }}
-            {% endfor %}
-            </ul>
-          {% endif %}
-        {% endwith %}
-
-
-        <form action="{{ '/auth' }}" method="POST" class="text">
-          UserName: <input type="text" name="uname" placeholder="enter the username here...." required/><br><br>
-          Password: <input type="password" name="pass" placeholder="enter the password here..." required/><br><br>
-        <p class="btn"><input type="submit" value="Submit" /></p>
-        <p class="btn"><input type="reset" value="clear"/></p>
-
-
-
-        </form>
+    
+      <div class="pad">
+            <br><br><br>      {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              {{messages}}
+            {% endif %}
+          {% endwith %}
+          <br><p class="link">Click below to get Summery</p><br>
+            <a href="{{url_for('summery')}}">CLICK HERE</a><br><br><br><br><br><br>
+            <br><br><br><br><br><br><br>
+        
       </div>
     </div>
   </header>
-
+  
+  
   <!-- Services -->
   
 
+  <!-- Portfolio Grid -->
   
-
   <!-- Footer -->
   <footer>
     <div class="container">
