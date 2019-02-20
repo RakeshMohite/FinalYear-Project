@@ -1,0 +1,27 @@
+<html>
+
+<body>
+
+
+    {{username}}
+    {% with message = get_flashed_messages() %}
+    {% if message %}
+    <ul>
+
+        {% for message in messages %}
+        <li>{{message}}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+
+
+
+    <form action = "http://localhost:5000/uploader" method = "POST" enctype = "multipart/form-data">
+        <input type = "file" name = "file" /><br><br>
+        <input type = "submit" value="submit"/>
+     </form>
+     
+    <a href="{{url_for('logout')}}">LogOut</a>
+</body>
+</html>
